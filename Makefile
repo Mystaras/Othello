@@ -23,4 +23,4 @@ exec: $(OUTPUT)
 	$(CC) $(CFLAGS) -c $(LDFLAGS) $< -o $@
 
 clean:
-	rm -f src/*.o *.log *.aux *.out $(OUTPUT)
+	rm -f src/*.o $(OUTPUT)
