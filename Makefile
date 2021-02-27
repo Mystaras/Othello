@@ -14,13 +14,13 @@ OBJ = $(patsubst %.c,%.o, $(filter-out $(MAIN), $(SRC)))
 OUTPUT = $(notdir $(basename $(shell pwd)))
 
 $(OUTPUT): $(OBJ)
-	gcc -o $@ $(LDFLAGS) $(INCLUDES) $^ $(MAIN) $(LDLIBS)
+	gcc $(LDFLAGS) $(INCLUDES) $^ $(MAIN) -o $@ $(LDLIBS)
 
 exec: $(OUTPUT)
 	rm -f src/*.o
 	
 %.o: %.c
-	$(CC) $(CFLAGS) -c $(LDFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) -c $< -o $@
 
 clean:
 	rm -f src/*.o $(OUTPUT)
