@@ -1,13 +1,19 @@
-pour creer le jeux et le rapport :
-make
+# Othello
 
-pour netoyer (!!efface aussi l'executable):
+## Requirements 
+[MLV Library](http://www-igm.univ-mlv.fr/~boussica/mlv/api/French/html/installation_linux.html)
+View link for instalation guide and requirements
+
+## Compile
+```shell
+make # keep objects as well
+make exec # make only executable clean rest
+
 make clean
+```
 
-pour creer que le rapport :
-make rapport
-
-pour jouer apres le make :
-OTHELLO
-
-
+## Execution
+```shell
+./Othello
+```
+Window should addapt to screen
