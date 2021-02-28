@@ -719,7 +719,7 @@ void blic_test(int i){
   MLV_flush_event_queue();
   //MLV_Event event=MLV_NONE;
   int x3, y3;
-  /* nice idea but MLV_get_event() has undefined behaviour*/ 
+  /* nice idea but MLV_get_event() has undefined behaviour (does not flush)*/ 
   /*do {
     event = MLV_get_event(NULL, NULL, NULL,NULL, NULL,&x3, &y3, NULL,NULL );
     fprintf(stderr,"yo ");
@@ -728,7 +728,7 @@ void blic_test(int i){
   MLV_wait_mouse(&x3,&y3);
   MLV_flush_event_queue();
   nav(x3,y3,i);
-  MLV_wait_milliseconds(500);
+  MLV_wait_milliseconds(200);
   button(i,x3, y3);
   
   return;
