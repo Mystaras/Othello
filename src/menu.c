@@ -29,7 +29,6 @@ void newgame(){
   button4 = MLV_load_image( "images2/exit1.png" );
   MLV_draw_image( button4,x/1.6, y/2.5+3*img_y+75);
   MLV_actualise_window();
-  MLV_wait_seconds(0.5);
   MLV_free_image(image3);
   MLV_free_image(button1);
   MLV_free_image(button2);
@@ -57,7 +56,6 @@ void newgame2(){
   button4 = MLV_load_image( "images2/exit1.png" );
   MLV_draw_image( button4,x/1.6, y/2.5+3*img_y+75);
   MLV_actualise_window();
-  MLV_wait_seconds(0.5);
   MLV_free_image(image3);
   MLV_free_image(button1);
   MLV_free_image(button2);
@@ -89,7 +87,6 @@ void newgame3(){
   button4 = MLV_load_image( "images2/exit1.png" );
   MLV_draw_image( button4,x/1.6, y/2.5+3*img_y+75);
   MLV_actualise_window();
-  MLV_wait_seconds(0.5);
   MLV_free_image(image3);
   MLV_free_image(button2);
   MLV_free_image(button3);
@@ -115,7 +112,6 @@ void about(){
   button4 = MLV_load_image( "images2/exit1.png" );
   MLV_draw_image( button4,x/1.6, y/2.5+3*img_y+75);
   MLV_actualise_window();
-  MLV_wait_seconds(0.5);
   MLV_free_image(image3);
   MLV_free_image(photo1);
   MLV_free_image(button4);
@@ -135,7 +131,6 @@ void button(int z, int x1, int y1){
       return;
     }
     else if(x1 > x/1.6 && x1 < ((x/1.6)+img_x) && y1 > y/2.5+img_y+25 && y1 < y/2.5+img_y+25+img_y){
-      MLV_wait_seconds(0.5);
       //menu_princ();
       return;
     }
@@ -177,12 +172,10 @@ void button(int z, int x1, int y1){
       MLV_free_image(white);
       MLV_free_image(black);
       MLV_free_image(options);
-      MLV_wait_seconds(0.5);
        
       return ;
     }
     else if(x1 > x/1.6 && x1 < ((x/1.6)+img_x) && y1 > y/2.5+3*img_y+75 && y1 < y/2.5+3*img_y+75+img_y){
-      MLV_wait_seconds(0.5);
       //menu_princ();
       return;
     }
@@ -190,7 +183,6 @@ void button(int z, int x1, int y1){
 
   case 2:
     if(x1 > x/1.6 && x1 < ((x/1.6)+img_x) && y1 > y/2.5 && y1 < ((y/2.5)+img_y)){
-      MLV_wait_seconds(0.5);
       /*!!!!!!!!!!!!!!!!!!!CONNECT JEUX 1 PLAYER LEVEL 0 !!!!!!!!!!!!!!!!!!!*/
       MLV_Image *board;
       board= MLV_load_image("images2/board.png");
@@ -212,7 +204,6 @@ void button(int z, int x1, int y1){
       MLV_free_image(white);
       MLV_free_image(black);
       MLV_free_image(options);
-      MLV_wait_seconds(0.5);
       //menu_princ();
       return;
     }
@@ -238,13 +229,11 @@ void button(int z, int x1, int y1){
       MLV_free_image(white);
       MLV_free_image(black);
       MLV_free_image(options);
-      MLV_wait_seconds(0.5);
       //menu_princ();
       return;
     }
     else if(x1 > x/1.37 && x1 < ((x/1.37)+img_x) && y1 > y/2.5+img_y+25 && y1 < ((y/2.5)+2*img_y+25)){
       newgame3();
-      MLV_wait_seconds(0.5);
       //menu_princ();
       return;
     }
@@ -284,7 +273,6 @@ void button(int z, int x1, int y1){
       MLV_free_image(white);
       MLV_free_image(black);
       MLV_free_image(options);
-      MLV_wait_seconds(0.5);
       MLV_actualise_window();
       return;
     }
@@ -345,11 +333,8 @@ void button(int z, int x1, int y1){
     break;
 
   default:
-    fprintf(stderr,"BLIC\n");
-    blic_test(z);
     break;
   }
-  //blic_test(z);
 }
 
 
@@ -470,7 +455,6 @@ void nav(int x1, int y1, int i){
       button4 = MLV_load_image( "images2/exit1.png" );
       MLV_draw_image( button4,x/1.6, y/2.5+3*img_y+75);
       MLV_actualise_window();
-      MLV_wait_seconds(0.5);
       MLV_free_image(button1);
       MLV_free_image(button2);
       MLV_free_image(button4);
@@ -486,7 +470,6 @@ void nav(int x1, int y1, int i){
       button4 = MLV_load_image( "images2/exit1.png" );
       MLV_draw_image( button4,x/1.6, y/2.5+3*img_y+75);
       MLV_actualise_window();
-      MLV_wait_seconds(0.5);
       MLV_free_image(button1);
       MLV_free_image(button2);
       MLV_free_image(button4);
@@ -502,7 +485,6 @@ void nav(int x1, int y1, int i){
       button4 = MLV_load_image( "images2/exit2.png" );
       MLV_draw_image( button4,x/1.6, y/2.5+3*img_y+75);
       MLV_actualise_window();
-      MLV_wait_seconds(0.5);
       MLV_free_image(button1);
       MLV_free_image(button2);
       MLV_free_image(button4);
@@ -745,13 +727,14 @@ void blic_test(int i){
   } while( event != MLV_MOUSE_BUTTON );*/
   MLV_wait_mouse(&x3,&y3);
   MLV_flush_event_queue();
+  nav(x3,y3,i);
+  MLV_wait_milliseconds(500);
   button(i,x3, y3);
-  MLV_wait_seconds(0.5);
+  
   return;
 }
 
 void menu_princ(){
-  MLV_wait_seconds(0.5);
   MLV_clear_window(MLV_COLOR_BLACK);
   MLV_Image *image3;
   image3 = MLV_load_image( "images2/back.png" );
@@ -770,7 +753,6 @@ void menu_princ(){
   button4 = MLV_load_image( "images2/exit1.png" );
   MLV_draw_image( button4,x/1.6, y/2.5+3*img_y+75);
   MLV_actualise_window();
-  MLV_wait_seconds(0.5);
   MLV_free_image(image3);
   MLV_free_image(button1);
   MLV_free_image(button2);
