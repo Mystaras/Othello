@@ -10,47 +10,30 @@
 
 void ia_3(game *g,int p){
 
-    bestplay bp=init_bp(g);
-    
     coup cp;   
-    cp.pos_x=1;
-    cp.pos_y=1;
+    arbre a=creer_arbre_avec_prof3(g,&cp,0,p);
 
+    int max=0;
     int count=0;
-    int *tablu_i=NULL;
-    int *tablu_j=NULL;
-    int tab[8][8];
-    tablu_i=calloc(bp.nb_choises+1,sizeof(int));
-    tablu_j=calloc(bp.nb_choises+1,sizeof(int));
-    
-    possibilite(g, tab, tablu_i, tablu_j);
-
-    arbre a=creer_arbre_avec_prof3(g,&cp,0,p,&bp,&count);
-    free_arbre(a);
- 
-    int best=0;
-    int best_pos=1;
-    for(int i=1;i<bp.nb_choises+1;i++){
-        if(best<bp.best[i]){
-            best=bp.best[i];
-            best_pos=i;
+    for(int i = 0; i < a->nb_fils; i++){
+        MLV_draw_text((taille_place*a->fils[i]->cp.pos_x)+x_i, (taille_place_y*a->fils[i]->cp.pos_y)+y_i,"%d",MLV_COLOR_ORANGE1,a->fils[i]->eval);
+        MLV_actualise_window();
+        MLV_wait_milliseconds(300);
+        if(a->fils[i]->eval > max){
+            count = i;
+            max = a->fils[i]->eval;
         }
     }
-    cp.pos_x=tablu_i[best_pos];
-    cp.pos_y=tablu_j[best_pos];
+    MLV_wait_seconds(2);
+
+    cp.pos_x = a->fils[count]->cp.pos_x;
+    cp.pos_y = a->fils[count]->cp.pos_y;
 
     jouer(&cp,g);
     g->debutant=1;
+
+    free_arbre(a);
     //printf("Best POS! nb = %d. Avec coup x=%d y=%d\n",best_pos,tablu_i[best_pos],tablu_j[best_pos]);
-
-    
-
-    free(tablu_i);
-    free(tablu_j);
-    free(bp.best);
-    tablu_i=NULL;
-    tablu_j=NULL;
-    bp.best=NULL;
     a=NULL;
    
     
@@ -78,6 +61,7 @@ game mode_3(MLV_Image *board, MLV_Image *black, MLV_Image *white, MLV_Image *opt
             }
         }
         else{
+            MLV_wait_seconds(2);
             ia_3(&g,prof);
             
         }

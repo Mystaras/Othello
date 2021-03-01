@@ -6,12 +6,8 @@
 /********************℗********************/
 /*****************************************/
 
-
 #include "menu.h"
 
-
-void menu_princ();
-void blic_test(int i);
 
 void newgame(){
   MLV_clear_window(MLV_COLOR_BLACK);

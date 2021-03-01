@@ -16,6 +16,7 @@ typedef struct noeud{
     coup cp;
     int nb_fils;
     struct noeud **fils;
+    int eval;
 }noeud;
 
 typedef struct {
@@ -46,7 +47,7 @@ arbre creer_arbre(game *g,coup *cp);
 arbre inserer_fils_n(arbre a, arbre fils, int num_fils);
 /* fonction qui insere un arbre "fils" dans le tableau fils a la position "num_fils" */
 
-arbre creer_arbre_avec_prof3(game *g, coup *cp, int prof_act, int prof_lim, bestplay *bp, int *count);
+arbre creer_arbre_avec_prof3(game *g, coup *cp,int prof_act, int prof_lim);
 /* fonction qui cree l arbre de prof="prof_lim" = nombre pair si on veut qu elle fasse corecement,
  son travail sinon elle calcule le meilleur coup pour faire gagner l'adversaire.
  Prie de renomer en creer_arbre_contre_enfants si l'on insiste a l'utiliser avec un nb impaire. */  

@@ -128,12 +128,13 @@ arbre creer_arbre_vide(){
 
 arbre creer_arbre(game *g,coup *cp){
     arbre a=NULL;
-    a=calloc(1,sizeof(noeud));
+    a=(arbre)malloc(sizeof(noeud));
     if(a==NULL){
         printf("ERROR ALLOC ARBRE");
     }
-    a->g=*g;
-    a->cp=*cp;
+    a->g=copy_game(g);
+    a->cp.pos_x = cp->pos_x;
+    a->cp.pos_y = cp->pos_y;
     //affiche_board(a->g);
     return a;
 }
@@ -152,60 +153,69 @@ arbre inserer_fils_n(arbre a, arbre fils, int num_fils){
 
 
 
-arbre creer_arbre_avec_prof3(game *g, coup *cp,int prof_act, int prof_lim, bestplay *bp, int *count){
+arbre creer_arbre_avec_prof3(game *g, coup *cp,int prof_act, int prof_lim){
     arbre a=NULL;
     int i=0;
     int tablu[8][8];
-    if(prof_act==1){
-        *count +=1;
-        //printf("!!!!!connt:%d\n",*count);
-    }
-    if(prof_act>prof_lim){
-        free(a);
-        return NULL;
-    }
+
     int *tablu_i=NULL;
     int *tablu_j=NULL;
     int taille_pos=existe_coup(g);
+    
     a=creer_arbre(g, cp);
     a->nb_fils=taille_pos;
     a->fils=NULL;
-    a->fils=(arbre*)calloc(taille_pos,sizeof(noeud));
+    a->fils=(arbre*)malloc(taille_pos * sizeof(noeud));
     if(a->fils==NULL){
         printf("ERREUR ALLOC FILS\n");
     }
-    tablu_i=calloc(taille_pos+1,sizeof(int));
-    tablu_j=calloc(taille_pos+1,sizeof(int));
+
+    if(prof_act == prof_lim){
+        // do evaluation of board for last son
+        a->eval = evaluation_plateu(g);
+        a->nb_fils = 0;
+        return a;
+    }
+
+    tablu_i=(int*)malloc((taille_pos+1) * sizeof(int));
+    tablu_j=(int*)malloc((taille_pos+1) * sizeof(int));
+
     possibilite(g,tablu,tablu_i,tablu_j);
     coup cp_temp;
-    game g_temp;
-    if(prof_act==prof_lim){
-        /*calc_score(g);
-          if(g->tour==1){
-          if(g->p1.score > g->p2.score){
-          bp->best[*count]+=1;  
-          }
-          }
-          else{      
-          if(g->p1.score < g->p2.score){
-          bp->best[*count]+=1;                    
-          }
-          }*/
-        int r=evaluation_plateu(g);
-        bp->best[*count]+=r;
-        bp->best_opt[*count]+=1;
-      
-        //printf("!!!!!!!!!%d\n",r);
-    }
-    prof_act+=1;
+    //game g_temp;
+    //prof_act+=1;
+    
     while(i<taille_pos && prof_act<=prof_lim){
-        g_temp=copy_game(g);
+        game g_temp=copy_game(g);
         cp_temp.pos_x=tablu_i[i+1];
         cp_temp.pos_y=tablu_j[i+1];
         jouer(&cp_temp,&g_temp);             
-        a=inserer_fils_n(a, creer_arbre_avec_prof3(&g_temp,&cp_temp, prof_act, prof_lim,bp,count), i);
+        a=inserer_fils_n(a, creer_arbre_avec_prof3(&g_temp,&cp_temp, prof_act+1, prof_lim), i);
         i++;
     }
+
+    //do min or max
+    if(a->fils != NULL){
+
+        a->eval = a->fils[0]->eval;
+        //max
+        if(prof_act % 2 == 0){
+            for(int n = 0 ; n < a->nb_fils; n++){
+                if(a->fils[n]->eval >= a->eval){
+                    a->eval = a->fils[n]->eval;
+                }
+            }
+        }
+        // min
+        else{
+            for(int n = 0 ; n < a->nb_fils; n++){
+                if(a->fils[n]->eval <= a->eval){
+                    a->eval = a->fils[n]->eval;
+                }
+            }
+        }
+    }
+
     free(tablu_i);
     free(tablu_j);
     tablu_i=NULL;
@@ -213,9 +223,10 @@ arbre creer_arbre_avec_prof3(game *g, coup *cp,int prof_act, int prof_lim, bestp
     return a;
 }
 
+
 void free_arbre(arbre a){
     int i;
-    if(!a){
+    if(a == NULL){
         return;
         //printf("end of branch\n");
     }
@@ -223,12 +234,9 @@ void free_arbre(arbre a){
     for(i=0;i<a->nb_fils;i++){
         free_arbre(a->fils[i]);
         //printf("freee\n");
-        if(i==a->nb_fils-1){
-            free(a->fils);
-            //printf("Free son block\n");
-        }
-        
     }
+
+    free(a->fils);
     free(a);
     a=NULL;
 }
