@@ -27,11 +27,11 @@ You can find the set of rules (in French)
 ![about-img](https://github.com/Mystaras/Othello/blob/main/prtsc/about.png?raw=true)
 
 ### New Game
-Chose between playing with a friend or against an AI
+#### Chose between playing with a friend or against an AI
 ![1v1-2v2](https://github.com/Mystaras/Othello/blob/main/prtsc/1v1or2v2.png?raw=true)
 
 #### AI mode
-There are 3 main game modes
+### There are 3 main game modes
 ![type-2v2](https://github.com/Mystaras/Othello/blob/main/prtsc/AI-lvls.png?raw=true)
 1. Level 0: The AIs next move is the one that brings the most value without looking ahead.
 2. Level 1: The AI uses min max algorithm looking 2 rounds forward
@@ -42,8 +42,8 @@ There are 3 main game modes
 ### The red numbers on the side show the each players score and the red arrows the possible moves 
 ![begin](https://github.com/Mystaras/Othello/blob/main/prtsc/beggingame.png?raw=true)
 
-### The green bumber show players the board value they currently have
+### The green numbers show players the board value they currently have
 ![boardvalue](https://github.com/Mystaras/Othello/blob/main/prtsc/board-value.png?raw=true)
 
-## When playing against the AI it will display the grade it assesed each move
+### When playing against the AI it will display the grade it assesed each possible move (orange)
 ![boardvalue](https://github.com/Mystaras/Othello/blob/main/prtsc/AIvalue.png?raw=true)
