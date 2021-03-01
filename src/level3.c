@@ -41,7 +41,7 @@ void ia_3(game *g,int p){
 
 game mode_3(MLV_Image *board, MLV_Image *black, MLV_Image *white, MLV_Image *options,int prof){
     game g=init_game();
-    g.debutant=2; //if == 1 player begins else if == 2 AI begins
+    g.debutant=1; //if == 1 player begins else if == 2 AI begins
     //get_names(&g);
     affichage_MLV(&g,board,white,black);
     coup cp;

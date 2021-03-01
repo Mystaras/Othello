@@ -193,7 +193,8 @@ arbre creer_arbre_avec_prof3(game *g, coup *cp,int prof_act, int prof_lim){
         a=inserer_fils_n(a, creer_arbre_avec_prof3(&g_temp,&cp_temp, prof_act+1, prof_lim), i);
         i++;
     }
-
+    // if board was dynamic would be idea here to clen the board so that it takes less space
+    
     //do min or max
     if(a->fils != NULL){
 
