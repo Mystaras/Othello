@@ -16,7 +16,7 @@ make clean
 ```shell
 ./Othello
 ```
-Window should addapt to screen
+Window should addapt to fullscreen
 
 ## Menu 
 Naviagate to the New Game and About sections
